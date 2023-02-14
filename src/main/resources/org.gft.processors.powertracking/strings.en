@@ -1,0 +1,17 @@
+org.gft.processors.powertracking.title=PowerTracking
+org.gft.processors.powertracking.description= It Computes waiting time and hourly Energy consumption based on the given instantaneous powers and timestamps values.
+
+value.title= Instantaneous Power
+value.description= Energy Transfer speed in kW or J/s.
+
+timestamp_value.title= Timestamp
+timestamp_value.description= Time at which the power was taken.
+
+time_range.title = Waiting Time
+time_range.description = Insert the period or time value (in minute as a double) after which an output will be generated.
+
+waitingtime_consumption.title = Waiting Consumption
+waitingtime_consumption.description =  The value of waiting time consumption
+
+hourly_consumption.title = Hourly Consumption
+hourly_consumption.description =  The value of hourly consumption
