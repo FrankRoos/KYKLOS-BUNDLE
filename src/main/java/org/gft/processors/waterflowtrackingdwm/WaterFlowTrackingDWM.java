@@ -115,9 +115,8 @@ public class WaterFlowTrackingDWM extends StreamPipesDataProcessor {
     String day = getCurrentDay(date);
 
     if(day_current != this.day_precedent && this.day_precedent != -1){
-
       // reset day for computations
-      day_precedent = day_current;
+      this.day_precedent = day_current;
       // Add current events for the next computation
       waterFlowList.add(water_flow );
       timestampsList.add(timestamp);
@@ -162,8 +161,6 @@ public class WaterFlowTrackingDWM extends StreamPipesDataProcessor {
     event.addField("dailyConsumption", this.daily_consumption);
     event.addField("weeklyConsumption", this.weekly_consumption);
     event.addField("monthlyConsumption", this.monthly_consumption);
-
-    System.out.println(date+" "+this.daily_consumption+" "+this.weekly_consumption+" "+this.month_precedent);
 
     out.collect(event);
   }

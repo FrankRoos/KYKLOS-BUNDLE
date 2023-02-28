@@ -25,12 +25,12 @@
 ***
 
 ## Description
-It Computes Daily, weekly and Monthly Water Consumption based on the given instant water flows and timestamps values.
+It Computes Waiting Time and hourly Water Consumption based on the given instant water flows and timestamps values.
 
 ***
 
 ## Required inputs
-#### value ,date_unix_ts and (Yes/No)
+#### value, date_unix_ts, a double and (Yes/No)
 
 ***
 
@@ -40,6 +40,8 @@ Amount of water flowing (as past a valve) per unit of time (express in cubic met
 
 #### Timestamp : date_unix_ts
 The field containing the time value (in millisecond) at which the water flow was taken.
+
+#### Waiting Time: a double
 
 #### Is the input value the total water flow? : (Yes/No)
 Compute total water flow (increasing value) instead of instant water flow?

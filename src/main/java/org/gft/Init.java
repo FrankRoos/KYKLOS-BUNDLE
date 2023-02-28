@@ -34,6 +34,7 @@ import org.gft.adapters.plm.PLMHttpStreamProtocol;
 import org.gft.processors.powertracking.PowerTrackingProcessor;
 import org.gft.processors.powertrackingdwm.PowerTrackingDWM;
 import org.gft.processors.waterflowtrackingdwm.WaterFlowTrackingDWM;
+import org.gft.processors.watertrackinghourly.WaterTrackingHourly;
 
 public class Init extends ExtensionsModelSubmitter {
 
@@ -47,7 +48,7 @@ public class Init extends ExtensionsModelSubmitter {
                     "human-readable service name",
                     "human-readable service description", 8090)
             .registerPipelineElements(new PowerTrackingDWM(), new PowerTrackingProcessor(),
-                    new WaterFlowTrackingDWM())
+                    new WaterTrackingHourly(), new WaterFlowTrackingDWM())
             .registerAdapter(new BackendHttpStreamProtocol())
             .registerAdapter(new PLMHttpStreamProtocol())
             .registerMessagingFormats(

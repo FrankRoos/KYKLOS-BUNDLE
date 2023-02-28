@@ -129,8 +129,6 @@ public class BackendHttpStreamProtocol extends BackendPullProtocol {
     String accessToken = login();
     String urlString = getUrl();
 
-    System.out.println(urlString);
-
     if (!config.getHighestDate().equals("CurrentDateTime") && config.getLowestDate().compareToIgnoreCase(config.getHighestDate()) >= 0) {
       logger.warn("Adapter Stopped: there is not anymore data to retrieve in the time interval!!!");
       logger.warn("Stop Adapter on the User Interface!!!");
@@ -163,6 +161,7 @@ public class BackendHttpStreamProtocol extends BackendPullProtocol {
     return result;
   }
 
+  // TODO modify algo
   private String getUrl(){
     String urlString;
     double hours = 24*60*60* 1_000;
@@ -171,7 +170,7 @@ public class BackendHttpStreamProtocol extends BackendPullProtocol {
     if(time_difference <= hours && config.getHighestDate().equals("CurrentDateTime")){
       urlString = config.getBaseUrl()+"?page="+config.getPage()+"&length="+config.getLength()+"&filter="+config.getFilter(config.LastDateTime(5),config.CurrentDateTime())+"&sort="+config.getSort();
     }else{
-      urlString = config.getBaseUrl()+"?page="+config.getPage()+"&length="+config.getLength()+"&filter="+config.getFilter(config.LastDateTime(1360),config.NextDateTime(1380))+"&sort="+config.getSort();
+      urlString = config.getBaseUrl()+"?page="+config.getPage()+"&length="+config.getLength()+"&filter="+config.getFilter(config.LastDateTime(1370),config.NextDateTime(1380))+"&sort="+config.getSort();
     }
 
     //replace spaces by "%20" to avoid 400 Bad Request

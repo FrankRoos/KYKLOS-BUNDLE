@@ -141,7 +141,6 @@ public class PLMHttpStreamProtocol extends PLMPullProtocol {
             this.accessToken = login();
         }
         String urlString = getUrl(this.selected_sensors);
-        System.out.println(urlString);
 
         if (config.getLowestDate().compareToIgnoreCase(config.getHighestDate()) >= 0) {
             logger.warn("Adapter Stopped: there is not anymore data to retrieve in the time interval!!!");
@@ -161,7 +160,7 @@ public class PLMHttpStreamProtocol extends PLMPullProtocol {
             connection.setRequestProperty("transfer-encoding", "chunked");
             connection.setRequestProperty("connection", "keep-alive");
             //connection.setDoOutput(true);
-            connection.setConnectTimeout(120000);
+            connection.setConnectTimeout(60000);
             connection.setReadTimeout(240000);
             // Send the GET request to the API endpoint
             connection.connect();
@@ -293,8 +292,8 @@ public class PLMHttpStreamProtocol extends PLMPullProtocol {
                 urn = sensor.getAsJsonArray("props").get(0).getAsJsonObject().get("urn").getAsString();
 
                 try {
-                    String first_date = config.LastDateTime();
-                    String second_date = config.NextDateTime();
+                    String first_date = config.firstDateTime();
+                    String second_date = config.secondDateTime();
                     urlString = config.getBaseUrl() + "bkd/aggr_exp_dt/" + config.getRepository() + "/" + config.getModel() + "/" + sensor.get("id") + "/" + urn + "/"
                             + this.accessToken + "/" + "?format=json" + "&from=" + first_date + "&to=" + second_date;
                     //replace spaces by "%20" and the two points by %3A to avoid 400 Bad Request

@@ -86,7 +86,7 @@ public class PowerTrackingDWM extends StreamPipesDataProcessor {
   }
 
   @Override
-  public void onInvocation(ProcessorParams parameters, SpOutputCollector out, EventProcessorRuntimeContext ctx) throws SpRuntimeException  {
+  public void onInvocation(ProcessorParams parameters, SpOutputCollector out, EventProcessorRuntimeContext ctx) throws SpRuntimeException {
     this.input_power_value = parameters.extractor().mappingPropertyValue(INPUT_VALUE);
     this.input_timestamp_value = parameters.extractor().mappingPropertyValue(TIMESTAMP_VALUE);
   }
@@ -151,8 +151,6 @@ public class PowerTrackingDWM extends StreamPipesDataProcessor {
     event.addField("dailyConsumption", this.daily_consumption);
     event.addField("weeklyConsumption", this.weekly_consumption);
     event.addField("monthlyConsumption", this.monthly_consumption);
-
-    System.out.println(date+" "+this.daily_consumption+" "+this.weekly_consumption+" "+this.monthly_consumption);
 
     out.collect(event);
   }
