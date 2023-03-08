@@ -70,7 +70,7 @@ public class PLMHttpConfig {
             Date myDate = date_format.parse(this.first_date);
             // convert date to local datetime
             LocalDateTime local_date_time = myDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-            local_date_time = local_date_time.plusMinutes(2880); // 2 days
+            local_date_time = local_date_time.plusMinutes(1440); // 1 days
             Date date_plus = Date.from(local_date_time.atZone(ZoneId.systemDefault()).toInstant());
             second_date = date_format.format(date_plus);
         }catch (ParseException e){
@@ -106,7 +106,7 @@ public class PLMHttpConfig {
 
         assert myDate != null;
         LocalDateTime local_date_time = myDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-        local_date_time = local_date_time.plusMinutes(2880); // 2 days
+        local_date_time = local_date_time.plusMinutes(1440); // 1 days
         Date date_plus = Date.from(local_date_time.atZone(ZoneId.systemDefault()).toInstant());
 
         first_date = date_format.format(date_plus);
