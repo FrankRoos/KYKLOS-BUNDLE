@@ -106,44 +106,44 @@ public class WaterTrackingHourly extends StreamPipesDataProcessor {
                 // reset the start time for computations
                 this.waitingtime_start = timestamp;
                 // Add newly current events for the next computation
-                waterFlowListForWaitingTimeBasedComputation.add(power);
-                timestampsListForWaitingTimeBasedComputation.add(timestamp);
+                this.waterFlowListForWaitingTimeBasedComputation.add(power);
+                this.timestampsListForWaitingTimeBasedComputation.add(timestamp);
                 //perform operations to obtain waiting time power from instantaneous powers
                 if(this.input_choice.equals("Yes")){
-                    this.waitingtime_consumption = waterFlowListForWaitingTimeBasedComputation.get(waterFlowListForWaitingTimeBasedComputation.size()-1)
-                            - waterFlowListForWaitingTimeBasedComputation.get(0);
+                    this.waitingtime_consumption = this.waterFlowListForWaitingTimeBasedComputation.get(this.waterFlowListForWaitingTimeBasedComputation.size()-1)
+                            - this.waterFlowListForWaitingTimeBasedComputation.get(0);
                 }else{
-                    this.waitingtime_consumption = powerToEnergy(waterFlowListForWaitingTimeBasedComputation, timestampsListForWaitingTimeBasedComputation);
+                    this.waitingtime_consumption = powerToEnergy(this.waterFlowListForWaitingTimeBasedComputation, this.timestampsListForWaitingTimeBasedComputation);
                 }
 
                 // Remove all elements from the Lists
-                waterFlowListForWaitingTimeBasedComputation.clear();
-                timestampsListForWaitingTimeBasedComputation.clear();
+                this.waterFlowListForWaitingTimeBasedComputation.clear();
+                this.timestampsListForWaitingTimeBasedComputation.clear();
                 // Add newly current events for the next computation
-                waterFlowListForWaitingTimeBasedComputation.add(power);
-                timestampsListForWaitingTimeBasedComputation.add(timestamp);
+                this.waterFlowListForWaitingTimeBasedComputation.add(power);
+                this.timestampsListForWaitingTimeBasedComputation.add(timestamp);
             }
 
             if (timestamp - this.hourlytime_start >= 3600000) {
                 // reset the start time for computations
                 this.hourlytime_start  = timestamp;
                 // Add newly current events for the next computation
-                waterFlowListForHourlyBasedComputation.add(power);
-                timestampsListForHourlyBasedComputation.add(timestamp);
+                this.waterFlowListForHourlyBasedComputation.add(power);
+                this.timestampsListForHourlyBasedComputation.add(timestamp);
                 //perform operations to obtain hourly power from instantaneous powers
                 if(this.input_choice.equals("Yes")){
-                    this.hourly_consumption = waterFlowListForHourlyBasedComputation.get(waterFlowListForHourlyBasedComputation.size()-1)
-                            - waterFlowListForHourlyBasedComputation.get(0);
+                    this.hourly_consumption = this.waterFlowListForHourlyBasedComputation.get(this.waterFlowListForHourlyBasedComputation.size()-1)
+                            - this.waterFlowListForHourlyBasedComputation.get(0);
                 }else{
-                    this.hourly_consumption = powerToEnergy(waterFlowListForHourlyBasedComputation, timestampsListForHourlyBasedComputation);
+                    this.hourly_consumption = powerToEnergy(this.waterFlowListForHourlyBasedComputation, this.timestampsListForHourlyBasedComputation);
                 }
 
                 // Remove all elements from the Lists
-                waterFlowListForHourlyBasedComputation.clear();
-                timestampsListForHourlyBasedComputation.clear();
+                this.waterFlowListForHourlyBasedComputation.clear();
+                this.timestampsListForHourlyBasedComputation.clear();
                 // Add newly current events for the next computation
-                waterFlowListForHourlyBasedComputation.add(power);
-                timestampsListForHourlyBasedComputation.add(timestamp);
+                this.waterFlowListForHourlyBasedComputation.add(power);
+                this.timestampsListForHourlyBasedComputation.add(timestamp);
             }
 
         }else {
@@ -153,10 +153,10 @@ public class WaterTrackingHourly extends StreamPipesDataProcessor {
                this.waitingtime_start = timestamp;
            }
            // add power to the lists
-           waterFlowListForWaitingTimeBasedComputation.add(power);
-           timestampsListForWaitingTimeBasedComputation.add(timestamp);
-           waterFlowListForHourlyBasedComputation.add(power);
-           timestampsListForHourlyBasedComputation.add(timestamp);
+           this.waterFlowListForWaitingTimeBasedComputation.add(power);
+           this.timestampsListForWaitingTimeBasedComputation.add(timestamp);
+           this.waterFlowListForHourlyBasedComputation.add(power);
+           this.timestampsListForHourlyBasedComputation.add(timestamp);
         }
 
        event.addField("waitingtimeConsumption", this.waitingtime_consumption);

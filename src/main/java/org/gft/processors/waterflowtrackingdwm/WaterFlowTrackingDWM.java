@@ -118,33 +118,33 @@ public class WaterFlowTrackingDWM extends StreamPipesDataProcessor {
       // reset day for computations
       this.day_precedent = day_current;
       // Add current events for the next computation
-      waterFlowList.add(water_flow );
-      timestampsList.add(timestamp);
+      this.waterFlowList.add(water_flow );
+      this.timestampsList.add(timestamp);
       //perform operations to obtain hourly power from instantaneous powers
       if(this.input_choice.equals("Yes")){
-        this.daily_consumption = waterFlowList.get(waterFlowList.size()-1) - waterFlowList.get(0);
+        this.daily_consumption = this.waterFlowList.get(this.waterFlowList.size()-1) - this.waterFlowList.get(0);
       }else{
-        this.daily_consumption = instantToDailyConsumption(waterFlowList, timestampsList);
+        this.daily_consumption = instantToDailyConsumption(this.waterFlowList, this.timestampsList);
       }
 
-      dailyConsumptionListForWeek.add(this.daily_consumption);
-      dailyConsumptionListForMonth.add(this.daily_consumption);
+      this.dailyConsumptionListForWeek.add(this.daily_consumption);
+      this.dailyConsumptionListForMonth.add(this.daily_consumption);
       // Remove all elements from the Lists
-      waterFlowList.clear();
-      timestampsList.clear();
+      this.waterFlowList.clear();
+      this.timestampsList.clear();
       // Add current events for the next computation
-      waterFlowList.add(water_flow );
-      timestampsList.add(timestamp);
+      this.waterFlowList.add(water_flow );
+      this.timestampsList.add(timestamp);
 
       if(day.equals("Mon")){
         this.weekly_consumption = dailyConsumptionsToWeeklyOrMonthlyConsumption(dailyConsumptionListForWeek);
-        dailyConsumptionListForWeek.clear();
+        this.dailyConsumptionListForWeek.clear();
       }
 
       if(month_current != this.month_precedent){
         this.month_precedent = month_current;
         this.monthly_consumption = dailyConsumptionsToWeeklyOrMonthlyConsumption(dailyConsumptionListForMonth);
-        dailyConsumptionListForMonth.clear();
+        this.dailyConsumptionListForMonth.clear();
       }
 
     }else {
@@ -154,8 +154,8 @@ public class WaterFlowTrackingDWM extends StreamPipesDataProcessor {
         this.day_precedent = day_current;
       }
       // add power to the lists
-      waterFlowList.add(water_flow);
-      timestampsList.add(timestamp);
+      this.waterFlowList.add(water_flow);
+      this.timestampsList.add(timestamp);
     }
 
     event.addField("dailyConsumption", this.daily_consumption);

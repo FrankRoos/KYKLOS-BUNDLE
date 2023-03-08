@@ -13,9 +13,9 @@ public class PLMHttpConfig {
     private final String username;
     private final String password;
     private final String signal_name;
-    private String lowest_date;
+    private final String lowest_date;
     private final String highest_date;
-    private boolean first_time = true;
+    private String first_date = "00-00-00 00:00:00";
     DateFormat date_format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 
@@ -47,8 +47,8 @@ public class PLMHttpConfig {
     public String getHighestDate(){
         return getMillis(highest_date);
     }
-     public String getLowestDate(){
-        return getMillis(lowest_date);
+    public String getLowestDate(){
+        return getMillis(first_date);
     }
 
     // Convert date the date format (yyyy-MM-dd HH:mm:ss) to the timestamp format (millis-long)
@@ -65,50 +65,53 @@ public class PLMHttpConfig {
 
     //return the second date for the current interval (sub-interval of the whole date interval as required in input) of data fetching
     public String secondDateTime() throws ParseException {
-        String date = " ";
-
+        String second_date = " ";
         try{
-            Date myDate = date_format.parse(this.lowest_date);
+            Date myDate = date_format.parse(this.first_date);
             // convert date to local datetime
             LocalDateTime local_date_time = myDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-            local_date_time = local_date_time.plusMinutes(720); // 12 hours
+            local_date_time = local_date_time.plusMinutes(2880); // 2 days
             Date date_plus = Date.from(local_date_time.atZone(ZoneId.systemDefault()).toInstant());
-            date = date_format.format(date_plus);
+            second_date = date_format.format(date_plus);
         }catch (ParseException e){
             e.printStackTrace();
         }
 
         //return the last date (highest_date: required as parameter) in the visualisation date interval, in order to not go out range.
-        if(date.compareToIgnoreCase(this.highest_date) >= 0){
+        if(second_date.compareToIgnoreCase(this.highest_date) >= 0){
             return getMillis(this.highest_date);
         }
 
-        return getMillis(date);
+        return getMillis(second_date);
     }
 
     //return the first date for the current interval (part of the whole date interval as required in input) of data fetching
     public String firstDateTime() throws ParseException {
-        String first_date = " ";
+        Date myDate = null;
+        String first_date;
+
+        // For the first sub_interval for data fetching, the first date must be exactly the lowest_date and since
+        //we update every time the current first date to the next first date it necessary to do this operation
+
+        if(this.first_date.equals("00-00-00 00:00:00")){
+            this.first_date = this.lowest_date;
+            return getMillis(this.lowest_date);
+        }
 
         try{
-            Date myDate = date_format.parse(this.lowest_date);
-            // convert date to local datetime
-            LocalDateTime local_date_time = myDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-
-            // For the first sub_interval for data fetching, the first date must be exactly the lowest_date and since
-            //we update every time the current first date to the next first date it necessary to do this operation
-            // TODO modify algo
-            if(this.first_time){
-                this.first_time = false;
-                local_date_time = local_date_time.minusMinutes(719);
-            }
-            local_date_time = local_date_time.plusMinutes(719);// 12 hours
-            Date date_plus = Date.from(local_date_time.atZone(ZoneId.systemDefault()).toInstant());
-            first_date = date_format.format(date_plus);
-            this.lowest_date = first_date;
+            myDate = date_format.parse(this.first_date);
         }catch (ParseException e){
             e.printStackTrace();
         }
+
+        assert myDate != null;
+        LocalDateTime local_date_time = myDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        local_date_time = local_date_time.plusMinutes(2880); // 2 days
+        Date date_plus = Date.from(local_date_time.atZone(ZoneId.systemDefault()).toInstant());
+
+        first_date = date_format.format(date_plus);
+        this.first_date = first_date;
+
         return getMillis(first_date);
     }
 }

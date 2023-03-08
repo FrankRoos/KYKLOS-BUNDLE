@@ -101,32 +101,32 @@ public class PowerTrackingProcessor extends StreamPipesDataProcessor {
                 // reset the start time for computations
                 this.waitingtime_start = timestamp;
                 // Add newly current events for the next computation
-                powersListForWaitingTimeBasedComputation.add(power);
-                timestampsListForWaitingTimeBasedComputation.add(timestamp);
+                this.powersListForWaitingTimeBasedComputation.add(power);
+                this.timestampsListForWaitingTimeBasedComputation.add(timestamp);
                 //perform operations to obtain waiting time power from instantaneous powers
-                this.waitingtime_consumption = powerToEnergy(powersListForWaitingTimeBasedComputation, timestampsListForWaitingTimeBasedComputation);
+                this.waitingtime_consumption = powerToEnergy(this.powersListForWaitingTimeBasedComputation, this.timestampsListForWaitingTimeBasedComputation);
                 // Remove all elements from the Lists
-                powersListForWaitingTimeBasedComputation.clear();
-                timestampsListForWaitingTimeBasedComputation.clear();
+                this.powersListForWaitingTimeBasedComputation.clear();
+                this.timestampsListForWaitingTimeBasedComputation.clear();
                 // Add newly current events for the next computation
-                powersListForWaitingTimeBasedComputation.add(power);
-                timestampsListForWaitingTimeBasedComputation.add(timestamp);
+                this.powersListForWaitingTimeBasedComputation.add(power);
+                this.timestampsListForWaitingTimeBasedComputation.add(timestamp);
             }
 
             if (timestamp - this.hourlytime_start >= 3600000) {
                 // reset the start time for computations
                 this.hourlytime_start  = timestamp;
                 // Add newly current events for the next computation
-                powersListForHourlyBasedComputation.add(power);
-                timestampsListForHourlyBasedComputation.add(timestamp);
+                this.powersListForHourlyBasedComputation.add(power);
+                this.timestampsListForHourlyBasedComputation.add(timestamp);
                 //perform operations to obtain hourly power from instantaneous powers
-                this.hourly_consumption = powerToEnergy(powersListForHourlyBasedComputation, timestampsListForHourlyBasedComputation);
+                this.hourly_consumption = powerToEnergy(this.powersListForHourlyBasedComputation, this.timestampsListForHourlyBasedComputation);
                 // Remove all elements from the Lists
-                powersListForHourlyBasedComputation.clear();
-                timestampsListForHourlyBasedComputation.clear();
+                this.powersListForHourlyBasedComputation.clear();
+                this.timestampsListForHourlyBasedComputation.clear();
                 // Add newly current events for the next computation
-                powersListForHourlyBasedComputation.add(power);
-                timestampsListForHourlyBasedComputation.add(timestamp);
+                this.powersListForHourlyBasedComputation.add(power);
+                this.timestampsListForHourlyBasedComputation.add(timestamp);
             }
 
         }else {
@@ -136,10 +136,10 @@ public class PowerTrackingProcessor extends StreamPipesDataProcessor {
                this.waitingtime_start = timestamp;
            }
            // add power to the lists
-           powersListForWaitingTimeBasedComputation.add(power);
-           timestampsListForWaitingTimeBasedComputation.add(timestamp);
-           powersListForHourlyBasedComputation.add(power);
-           timestampsListForHourlyBasedComputation.add(timestamp);
+           this.powersListForWaitingTimeBasedComputation.add(power);
+           this.timestampsListForWaitingTimeBasedComputation.add(timestamp);
+           this.powersListForHourlyBasedComputation.add(power);
+           this.timestampsListForHourlyBasedComputation.add(timestamp);
 
         }
 
